@@ -18,5 +18,8 @@ RSpec.describe "README.md" do
     it "in case of missing keys (README.md:52)" do
       expect{ diggy.b.d.f }.to raise_error(KeyError, "key not found: :f")
     end
+    it "if we pass an array (README.md:59)" do
+      expect{ Diggy([:a]) }.to raise_error(ArgumentError)
+    end
   end
 end

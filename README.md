@@ -1,3 +1,4 @@
+[![Issue Count](https://codeclimate.com/github/RobertDober/diggy_methods/badges/issue_count.svg)](https://codeclimate.com/github/RobertDober/diggy_methods)
 
 [![Gem Version](http://img.shields.io/gem/v/lab42_diggy_methods.svg)](https://rubygems.org/gems/lab42_diggy_methods)
 [![CI](https://github.com/robertdober/diggy_methods/workflows/CI/badge.svg)](https://github.com/robertdober/diggy_methods/actions)
@@ -53,7 +54,12 @@ And in case of missing keys
     expect{ diggy.b.d.f }.to raise_error(KeyError, "key not found: :f")
 ```
 
+If we access unknown keys we get the usual `KeyError` error, however we must not pass, nonhashable data
 
+But if we pass an array
+```ruby
+    expect{ Diggy([:a]) }.to raise_error(ArgumentError)
+```
 
 # LICENSE
 

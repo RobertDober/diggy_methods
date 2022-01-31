@@ -12,10 +12,12 @@ module Kernel
         if a.respond_to?(:to_h)
           a.to_h.merge(k)
         else
-          raise ArgumentError, "positional argument must be a hash or respond to to_h if given"
+          raise TypeError
         end
       end
     Lab42::DiggyMethods.new(**data)
+  rescue TypeError
+          raise ArgumentError, "positional argument must be a hash or respond to to_h if present"
   end
 end
 #  SPDX-License-Identifier: Apache-2.0

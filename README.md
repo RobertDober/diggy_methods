@@ -60,6 +60,25 @@ But if we pass an array
     expect{ Diggy([:a]) }.to raise_error(ArgumentError)
 ```
 
+### Context: Using in ERB
+
+In order to take advantage of this syntax we want to pass the binding of a `Diggy` object to `ERB`
+
+Given an `ERB` template
+```ruby
+    require 'erb'
+    let(:template_text) { "<%= data.person.name %>" }
+```
+
+And a `Lab42::DiggyMethod` instance
+```ruby
+    let(:data) { Diggy(data: {person: {name: "YHS"}}) }
+```
+
+Then we can pass the binding to the template
+```ruby
+    expect(ERB.new(template_text).result(data.__binding__)).to eq("YHS")
+```
 # LICENSE
 
 Copyright 2022 Robert Dober robert.dober@gmail.com

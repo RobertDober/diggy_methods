@@ -22,4 +22,15 @@ RSpec.describe "README.md" do
       expect{ Diggy([:a]) }.to raise_error(ArgumentError)
     end
   end
+  # README.md:63
+  context "Using in ERB" do
+    # README.md:68
+    require 'erb'
+    let(:template_text) { "<%= data.person.name %>" }
+    # README.md:74
+    let(:data) { Diggy(data: {person: {name: "YHS"}}) }
+    it "we can pass the binding to the template (README.md:79)" do
+      expect(ERB.new(template_text).result(data.__binding__)).to eq("YHS")
+    end
+  end
 end

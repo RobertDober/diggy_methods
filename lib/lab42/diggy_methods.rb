@@ -3,7 +3,9 @@
 require_relative 'diggy_methods/kernel'
 module Lab42
   class DiggyMethods
-    attr_reader :data
+
+    # Expose for ERB
+    def __binding__; binding end
 
     # In case data has key :data (often the case)
     def __data__; @data end
@@ -36,7 +38,7 @@ module Lab42
     end
 
     def method_missing(name)
-      found = data.fetch(name)
+      found = @data.fetch(name)
       if found.respond_to?(:to_h)
         self.class.new(**found)
       else

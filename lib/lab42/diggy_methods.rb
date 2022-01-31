@@ -10,8 +10,29 @@ module Lab42
 
     private
 
-    def initialize(**data)
-      @data = data
+    def initialize(a=nil, **data_)
+      @data = _make_data_from_args(a, data_)
+    end
+
+    def _make_data_from_args(a, data_)
+      case a
+      when Hash
+        a.merge(data_)
+      when nil
+        data_
+      else
+        _try_convert(a, data_)
+      end
+    end
+
+    def _try_convert(a, data_)
+      if a.respond_to?(:to_h)
+        a.to_h.merge(data_)
+      else
+        raise TypeError
+      end
+    rescue TypeError
+      raise ArgumentError, "positional argument must be a hash or respond to to_h if present"
     end
 
     def method_missing(name)

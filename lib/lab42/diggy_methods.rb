@@ -38,6 +38,14 @@ module Lab42
     end
 
     def method_missing(name)
+      if name.to_s.end_with?"!"
+        @data.fetch(name.to_s.sub(/!\z/, "").to_sym)
+      else
+        _method_missing_try_descend(name)
+      end
+    end
+
+    def _method_missing_try_descend(name)
       found = @data.fetch(name)
       if found.respond_to?(:to_h)
         self.class.new(**found)

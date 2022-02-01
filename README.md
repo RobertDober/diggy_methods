@@ -48,6 +48,16 @@ Then we can access its fields as follows
   expect(diggy.b.d.e).to eq(3)
 ```
 
+And we can use a shortcut for `key.__data__` by using `key!`A
+```ruby
+    expect(diggy.b.d!).to eq(e: 3)
+```
+
+And that works for leave nodes too of course
+```ruby
+    expect(diggy.a!).to eq(1)
+```
+
 And in case of missing keys
 ```ruby
     expect{ diggy.b.d.f }.to raise_error(KeyError, "key not found: :f")
@@ -79,6 +89,7 @@ Then we can pass the binding to the template
 ```ruby
     expect(ERB.new(template_text).result(data.__binding__)).to eq("YHS")
 ```
+
 # LICENSE
 
 Copyright 2022 Robert Dober robert.dober@gmail.com

@@ -15,21 +15,27 @@ RSpec.describe "README.md" do
       expect(diggy.b.d.__data__).to eq(e: 3)
       expect(diggy.b.d.e).to eq(3)
     end
-    it "in case of missing keys (README.md:52)" do
+    it "we can use a shortcut for `key.__data__` by using `key!`A (README.md:52)" do
+      expect(diggy.b.d!).to eq(e: 3)
+    end
+    it "that works for leave nodes too of course (README.md:57)" do
+      expect(diggy.a!).to eq(1)
+    end
+    it "in case of missing keys (README.md:62)" do
       expect{ diggy.b.d.f }.to raise_error(KeyError, "key not found: :f")
     end
-    it "if we pass an array (README.md:59)" do
+    it "if we pass an array (README.md:69)" do
       expect{ Diggy([:a]) }.to raise_error(ArgumentError)
     end
   end
-  # README.md:63
+  # README.md:73
   context "Using in ERB" do
-    # README.md:68
+    # README.md:78
     require 'erb'
     let(:template_text) { "<%= data.person.name %>" }
-    # README.md:74
+    # README.md:84
     let(:data) { Diggy(data: {person: {name: "YHS"}}) }
-    it "we can pass the binding to the template (README.md:79)" do
+    it "we can pass the binding to the template (README.md:89)" do
       expect(ERB.new(template_text).result(data.__binding__)).to eq("YHS")
     end
   end

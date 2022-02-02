@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.email       = 'robert.dober@gmail.com'
   s.files       = Dir.glob("lib/**/*.rb")
   s.files      += %w[LICENSE README.md]
-  s.homepage    = "https://github.com/robertdober/lab42_diggy_methods"
+  s.homepage    = "https://github.com/robertdober/diggy_methods"
   s.licenses    = %w[Apache-2.0]
 
   s.required_ruby_version = '>= 3.1.0'

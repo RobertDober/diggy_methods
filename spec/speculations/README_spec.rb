@@ -39,4 +39,15 @@ RSpec.describe "README.md" do
       expect(ERB.new(template_text).result(data.__binding__)).to eq("YHS")
     end
   end
+  # README.md:93
+  context "Iteration" do
+    # README.md:98
+    let(:diggy) { Diggy(a: [b: 1, c: 2]) }
+    it "we get an enumerator (README.md:103)" do
+      expect(diggy.a).to be_an(Array)
+    end
+    it "we can use it to iterate (README.md:108)" do
+      expect(diggy.a.first.b).to eq(1)
+    end
+  end
 end

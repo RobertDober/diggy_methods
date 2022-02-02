@@ -37,7 +37,7 @@ module Lab42
       raise ArgumentError, "positional argument must be a hash or respond to to_h if present"
     end
 
-    def method_missing(name)
+    def method_missing(name, *)
       if name.to_s.end_with?"!"
         @data.fetch(name.to_s.sub(/!\z/, "").to_sym)
       else
@@ -45,12 +45,24 @@ module Lab42
       end
     end
 
-    def _method_missing_try_descend(name)
-      found = @data.fetch(name)
+    def _make_diggy_array(found)
+      found.map { self.class.new(_1) }
+    end
+
+    def _maybe_make_diggy(found)
       if found.respond_to?(:to_h)
         self.class.new(**found)
       else
         found
+      end
+    end
+
+    def _method_missing_try_descend(name)
+      found = @data.fetch(name)
+      if Array === found
+        _make_diggy_array(found)
+      else
+        _maybe_make_diggy(found)
       end
     end
   end

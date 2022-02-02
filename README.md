@@ -90,6 +90,25 @@ Then we can pass the binding to the template
     expect(ERB.new(template_text).result(data.__binding__)).to eq("YHS")
 ```
 
+### Context: Iteration
+
+If an element in a diggy object is an array we descend
+
+Given yet another diggy™
+```ruby
+    let(:diggy) { Diggy(a: [b: 1, c: 2]) }
+```
+
+Then we get an enumerator
+```ruby
+    expect(diggy.a).to be_an(Array)
+```
+
+And we can use it to iterate
+```ruby
+    expect(diggy.a.first.b).to eq(1)
+```
+
 # LICENSE
 
 Copyright 2022 Robert Dober robert.dober@gmail.com

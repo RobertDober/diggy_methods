@@ -60,7 +60,7 @@ And that works for leave nodes too of course
 
 And in case of missing keys
 ```ruby
-    expect{ diggy.b.d.f }.to raise_error(KeyError, "key not found: :f")
+    expect{ diggy.b.d.f }.to raise_error(KeyError, "key not found: b.d.f")
 ```
 
 If we access unknown keys we get the usual `KeyError` error, however we must not pass, nonhashable data

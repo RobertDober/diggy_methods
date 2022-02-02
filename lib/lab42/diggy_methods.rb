@@ -14,7 +14,7 @@ module Lab42
 
     def initialize(a=nil, __key_chain__: [], **data_)
       @data = _make_data_from_args(a, data_)
-      @keychain = __key_chain__
+      @key_chain = __key_chain__
     end
 
     def _make_data_from_args(a, data_)
@@ -47,20 +47,20 @@ module Lab42
     end
 
     def _make_diggy_array(found)
-      found.map { self.class.new(_1) }
+      found.map { self.class.new(_1, __key_chain__: @key_chain) }
     end
 
     def _maybe_make_diggy(found)
       if found.respond_to?(:to_h)
-        self.class.new(**found, __key_chain__: @keychain)
+        self.class.new(**found, __key_chain__: @key_chain)
       else
         found
       end
     end
 
     def _method_missing_try_descend(name)
-      @keychain << name
-      found = @data.fetch(name) { raise KeyError, "key not found: #{@keychain.join(".")}" }
+      @key_chain << name
+      found = @data.fetch(name) { raise KeyError, "key not found: #{@key_chain.join(".")}" }
       if Array === found
         _make_diggy_array(found)
       else

@@ -24,29 +24,33 @@ RSpec.describe "README.md" do
     it "in case of missing keys (README.md:62)" do
       expect{ diggy.b.d.f }.to raise_error(KeyError, "key not found: b.d.f")
     end
-    it "if we pass an array (README.md:69)" do
+    it "this works for arrays too: (README.md:67)" do
+      with_array = Diggy(a: [b: {}])
+      expect { with_array.a.first.b.c }.to raise_error(KeyError, "key not found: a.b.c")
+    end
+    it "if we pass an array (README.md:75)" do
       expect{ Diggy([:a]) }.to raise_error(ArgumentError)
     end
   end
-  # README.md:73
+  # README.md:79
   context "Using in ERB" do
-    # README.md:78
+    # README.md:84
     require 'erb'
     let(:template_text) { "<%= data.person.name %>" }
-    # README.md:84
+    # README.md:90
     let(:data) { Diggy(data: {person: {name: "YHS"}}) }
-    it "we can pass the binding to the template (README.md:89)" do
+    it "we can pass the binding to the template (README.md:95)" do
       expect(ERB.new(template_text).result(data.__binding__)).to eq("YHS")
     end
   end
-  # README.md:93
+  # README.md:99
   context "Iteration" do
-    # README.md:98
+    # README.md:104
     let(:diggy) { Diggy(a: [b: 1, c: 2]) }
-    it "we get an enumerator (README.md:103)" do
+    it "we get an enumerator (README.md:109)" do
       expect(diggy.a).to be_an(Array)
     end
-    it "we can use it to iterate (README.md:108)" do
+    it "we can use it to iterate (README.md:114)" do
       expect(diggy.a.first.b).to eq(1)
     end
   end

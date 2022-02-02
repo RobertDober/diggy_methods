@@ -63,6 +63,12 @@ And in case of missing keys
     expect{ diggy.b.d.f }.to raise_error(KeyError, "key not found: b.d.f")
 ```
 
+And this works for arrays too:
+```ruby
+    with_array = Diggy(a: [b: {}])
+    expect { with_array.a.first.b.c }.to raise_error(KeyError, "key not found: a.b.c")
+```
+
 If we access unknown keys we get the usual `KeyError` error, however we must not pass, nonhashable data
 
 But if we pass an array

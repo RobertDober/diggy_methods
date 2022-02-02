@@ -33,7 +33,7 @@ Well let us [speculate about](https://github.com/RobertDober/speculate_about) it
 
 ### Context: `Diggy` function
 
-An extension to the Kernel as an alias to `Lab42::DiggyMethods.new`
+An extension to the Kernel as an alias for `Lab42::DiggyMethods.new`
 
 Given
 ```ruby
@@ -48,7 +48,7 @@ Then we can access its fields as follows
   expect(diggy.b.d.e).to eq(3)
 ```
 
-And we can use a shortcut for `key.__data__` by using `key!`A
+And we can use a shortcut for `key.__data__` by using `key!`
 ```ruby
     expect(diggy.b.d!).to eq(e: 3)
 ```
@@ -76,7 +76,7 @@ But if we pass an array
     expect{ Diggy([:a]) }.to raise_error(ArgumentError)
 ```
 
-### Context: Using in ERB
+### Context: Using in ERB with `__binding__`
 
 In order to take advantage of this syntax we want to pass the binding of a `Diggy` object to `ERB`
 
@@ -105,12 +105,12 @@ Given yet another diggy™
     let(:diggy) { Diggy(a: [b: 1, c: 2]) }
 ```
 
-Then we get an enumerator
+Then we get an array
 ```ruby
     expect(diggy.a).to be_an(Array)
 ```
 
-And we can use it to iterate
+And it contains diggy instances
 ```ruby
     expect(diggy.a.first.b).to eq(1)
 ```

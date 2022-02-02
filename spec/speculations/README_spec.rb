@@ -15,7 +15,7 @@ RSpec.describe "README.md" do
       expect(diggy.b.d.__data__).to eq(e: 3)
       expect(diggy.b.d.e).to eq(3)
     end
-    it "we can use a shortcut for `key.__data__` by using `key!`A (README.md:52)" do
+    it "we can use a shortcut for `key.__data__` by using `key!` (README.md:52)" do
       expect(diggy.b.d!).to eq(e: 3)
     end
     it "that works for leave nodes too of course (README.md:57)" do
@@ -33,7 +33,7 @@ RSpec.describe "README.md" do
     end
   end
   # README.md:79
-  context "Using in ERB" do
+  context "Using in ERB with `__binding__`" do
     # README.md:84
     require 'erb'
     let(:template_text) { "<%= data.person.name %>" }
@@ -47,10 +47,10 @@ RSpec.describe "README.md" do
   context "Iteration" do
     # README.md:104
     let(:diggy) { Diggy(a: [b: 1, c: 2]) }
-    it "we get an enumerator (README.md:109)" do
+    it "we get an array (README.md:109)" do
       expect(diggy.a).to be_an(Array)
     end
-    it "we can use it to iterate (README.md:114)" do
+    it "it contains diggy instances (README.md:114)" do
       expect(diggy.a.first.b).to eq(1)
     end
   end

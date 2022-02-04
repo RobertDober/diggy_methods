@@ -42,15 +42,30 @@ RSpec.describe "README.md" do
     it "we can pass the binding to the template (README.md:95)" do
       expect(ERB.new(template_text).result(data.__binding__)).to eq("YHS")
     end
+    # README.md:99
+    context "Merging bindings" do
+      # README.md:105
+      let(:diggy) { Diggy(a: 1) }
+      let :mod  do
+      Module.new do
+      def b; 42 end
+      end
+      end
+      # README.md:114
+      before { diggy.extend(mod) }
+      it "the module's methods become accessible in the binding (README.md:119)" do
+        expect(diggy.__binding__.eval("b")).to eq(42)
+      end
+    end
   end
-  # README.md:99
+  # README.md:123
   context "Iteration" do
-    # README.md:104
+    # README.md:128
     let(:diggy) { Diggy(a: [b: 1, c: 2]) }
-    it "we get an array (README.md:109)" do
+    it "we get an array (README.md:133)" do
       expect(diggy.a).to be_an(Array)
     end
-    it "it contains diggy instances (README.md:114)" do
+    it "it contains diggy instances (README.md:138)" do
       expect(diggy.a.first.b).to eq(1)
     end
   end

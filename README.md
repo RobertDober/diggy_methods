@@ -96,6 +96,30 @@ Then we can pass the binding to the template
     expect(ERB.new(template_text).result(data.__binding__)).to eq("YHS")
 ```
 
+#### Context: Merging bindings
+
+In some cases `Diggy` will not be the only useful _binding_ in an `ERB` Template
+we can work around this as follows
+
+Given a diggy and a module
+```ruby
+    let(:diggy) { Diggy(a: 1) }
+    let :mod  do
+      Module.new do
+        def b; 42 end
+      end
+    end
+```
+And we extend the `diggy` with the module
+```ruby
+    before { diggy.extend(mod) }
+```
+
+Then the module's methods become accessible in the binding
+```ruby
+    expect(diggy.__binding__.eval("b")).to eq(42)
+```
+
 ### Context: Iteration
 
 If an element in a diggy object is an array we descend

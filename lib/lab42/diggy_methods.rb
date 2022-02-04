@@ -46,26 +46,29 @@ module Lab42
       end
     end
 
-    def _make_diggy_array(found)
-      found.map { self.class.new(_1, __key_chain__: @key_chain) }
+    def _make_diggy_array(found, key)
+      found.map { self.class.new(_1, __key_chain__: _new_key_chain(key)) }
     end
 
-    def _maybe_make_diggy(found)
+    def _maybe_make_diggy(found, key)
       if found.respond_to?(:to_h)
-        self.class.new(**found, __key_chain__: @key_chain)
+        self.class.new(**found, __key_chain__: _new_key_chain(key))
       else
         found
       end
     end
 
     def _method_missing_try_descend(name)
-      @key_chain << name
-      found = @data.fetch(name) { raise KeyError, "key not found: #{@key_chain.join(".")}" }
+      found = @data.fetch(name) { raise KeyError, "key not found: #{_new_key_chain(name).join(".")}" }
       if Array === found
-        _make_diggy_array(found)
+        _make_diggy_array(found, name)
       else
-        _maybe_make_diggy(found)
+        _maybe_make_diggy(found, name)
       end
+    end
+
+    def _new_key_chain(key)
+      @key_chain + [key]
     end
   end
 end
